@@ -14,3 +14,18 @@ debug = DebugToolbarExtension(app)
 
 connect_db(app)
 db.create_all()
+
+@app.get('/')
+def redirect_users_page():
+    return redirect('/users')
+
+@app.get('/users')  
+def show_user_list():
+    users = db.session.query(User.id, User.first_name, User.last_name).all()
+    return render_template('user-listing.html', 
+                                users = users)
+
+
+@app.get('/users/new')
+def show_new_user_form():
+    return render_template('user-form.html')
