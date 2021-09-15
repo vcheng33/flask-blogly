@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h1>{{ user.first-name}} {{ user.last-name }}</h1>
+
+    <img href={{ user.image-url }}>
+    <div>
+        <a href='/users/{{ user.id }}/edit-page'>Edit</a>
+        <a href='/users/{{ user.id }}/delete-page'>Delete</a>
+    </div>
+</div>
+
+
+{% endblock %}
