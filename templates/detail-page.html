@@ -2,9 +2,9 @@
 
 {% block content %}
 <div>
-    <h1>{{ user.first-name}} {{ user.last-name }}</h1>
+    <h1>{{ user.first_name}} {{ user.last_name }}</h1>
 
-    <img href={{ user.image-url }}>
+    <img href={{ user.image_url }}>
     <div>
         <a href='/users/{{ user.id }}/edit-page'>Edit</a>
         <a href='/users/{{ user.id }}/delete-page'>Delete</a>

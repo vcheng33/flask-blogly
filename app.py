@@ -25,7 +25,29 @@ def show_user_list():
     return render_template('user-listing.html', 
                                 users = users)
 
-
 @app.get('/users/new')
 def show_new_user_form():
     return render_template('user-form.html')
+
+@app.post('/users/new')
+def save_new_user():
+    """ Takes the inputs from the new user form and add it to the database."""
+
+    first_name = request.form.get('first-name')
+    last_name = request.form.get('last-name')
+    image_url = request.form.get('image_url')
+
+    user = User(first_name=first_name, last_name=last_name, image_url=image_url)
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect('/users')
+
+@app.get('/users/<int:userId>')
+def show_user_details(userId):
+    """ Shows details about the user """
+
+    user = User.query.get(userId)
+    breakpoint()
+
+    return render_template('detail-page.html', user=user)
