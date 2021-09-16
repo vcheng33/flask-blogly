@@ -33,9 +33,9 @@ def show_new_user_form():
 def save_new_user():
     """ Takes the inputs from the new user form and add it to the database."""
 
-    first_name = request.form.get('first-name')
-    last_name = request.form.get('last-name')
-    image_url = request.form.get('image_url')
+    first_name = request.form['first-name']
+    last_name = request.form['last-name']
+    image_url = request.form['image-url']
 
     user = User(first_name=first_name, last_name=last_name, image_url=image_url)
     db.session.add(user)
@@ -48,6 +48,6 @@ def show_user_details(userId):
     """ Shows details about the user """
 
     user = User.query.get(userId)
-    breakpoint()
+    # breakpoint()
 
     return render_template('detail-page.html', user=user)
