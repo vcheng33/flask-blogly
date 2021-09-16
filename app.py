@@ -112,3 +112,30 @@ def save_new_post(user_id):
     db.session.commit()
 
     return redirect(f'/users/{user_id}')
+
+@app.get('/posts/<int:post_id>')
+def show_post_details(post_id):
+    """ Shows details about the post """
+
+    post = Post.query.get(post_id)
+    # breakpoint()
+
+    return render_template('post-details.html', post=post)
+
+# @app.post('/users/<int:user_id>/edit')
+# def edit_user(user_id):
+#     """Gets the user information from the database and then 
+#     updates the db with user information from the new user form"""
+#     user = User.query.get(user_id)
+
+#     first_name = request.form['first-name']
+#     last_name = request.form['last-name']
+#     image_url = request.form['image-url']
+
+#     user.first_name=first_name
+#     user.last_name=last_name
+#     user.image_url=image_url
+    
+#     db.session.commit()
+
+#     return redirect('/users')
