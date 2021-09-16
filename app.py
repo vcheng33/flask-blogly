@@ -51,3 +51,28 @@ def show_user_details(userId):
     # breakpoint()
 
     return render_template('detail-page.html', user=user)
+
+@app.get('/users/<int:userId>/edit')
+def show_user_edit_page(userId):
+    """ Shows details about the user """
+
+    user = User.query.get(userId)
+    # breakpoint()
+
+    return render_template('edit-page.html', user=user)
+
+@app.post('/users/<int:userId>/edit')
+def edit_user(userId):
+    user = User.query.get(userId)
+
+    first_name = request.form['first-name']
+    last_name = request.form['last-name']
+    image_url = request.form['image-url']
+
+    user.first_name=first_name
+    user.last_name=last_name
+    user.image_url=image_url
+    
+    db.session.commit()
+
+    return redirect('/users')
