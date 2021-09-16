@@ -51,9 +51,10 @@ def show_user_details(user_id):
     """ Shows details about the user """
 
     user = User.query.get(user_id)
+    posts = user.posts
     # breakpoint()
 
-    return render_template('user-details.html', user=user)
+    return render_template('user-details.html', user=user, posts=posts)
 
 @app.get('/users/<int:user_id>/edit')
 def show_user_edit_page(user_id):
@@ -92,3 +93,4 @@ def delete_user(user_id):
     db.session.commit()
     
     return redirect('/users')
+

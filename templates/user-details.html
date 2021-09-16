@@ -13,7 +13,15 @@
     </div>
 </div>
 
+<h2>POSTS</h2>
+<ul>
+    {% for post in posts %}
+        <a href='/posts/{{ post.id}}'><li>{{ post.title}}</li></a>
+    {% endfor %}
+</ul>
+
+<a href='/users/{{user.id}}/posts/new'>Add Post</a>
+
 
 {% endblock %}
 
-<!-- name user details page -->
