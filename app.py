@@ -76,3 +76,11 @@ def edit_user(userId):
     db.session.commit()
 
     return redirect('/users')
+
+@app.post('/users/<int:userId>/delete')
+def delete_user(userId):
+    user = User.query.get(userId)
+
+    db.session.delete(user)
+    db.session.commit()
+    return redirect('/users')
