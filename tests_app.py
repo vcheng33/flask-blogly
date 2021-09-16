@@ -66,8 +66,8 @@ class UserTestCase (TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn('value=Tweety', html)
-            self.assertIn('value=Bird', html)
+            self.assertIn("value='Tweety'", html)
+            self.assertIn("value='Bird'", html)
             self.assertIn(f"<form action='/users/{self.user_id}/edit'", html)
 
 
@@ -76,7 +76,10 @@ class UserTestCase (TestCase):
 
         with app.test_client() as client:
 
-            edited_info = {"first-name": "Tweety", "last-name": "Bird Jr", "image-url": "https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/320px-Tweety.svg.png"}
+            edited_info = {
+                "first-name": "Tweety", 
+                "last-name": "Bird Jr", 
+                "image-url": "https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Tweety.svg/320px-Tweety.svg.png"}
             resp = client.post(f"/users/{self.user_id}/edit", data=edited_info, follow_redirects=True)
 
             html = resp.get_data(as_text=True)

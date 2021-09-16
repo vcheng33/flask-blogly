@@ -17,17 +17,20 @@ db.create_all()
 
 @app.get('/')
 def redirect_users_page():
+    """Redirects to the users page"""
     return redirect('/users')
 
 @app.get('/users')  
 def show_user_list():
+    """gets user list and renders user-listing.html"""
     users = db.session.query(User.id, User.first_name, User.last_name).all()
     return render_template('user-listing.html', 
                                 users = users)
 
 @app.get('/users/new')
 def show_new_user_form():
-    return render_template('user-form.html')
+    """Renders the user-add-form.html"""
+    return render_template('user-add-form.html')
 
 @app.post('/users/new')
 def save_new_user():
@@ -43,27 +46,30 @@ def save_new_user():
 
     return redirect('/users')
 
-@app.get('/users/<int:userId>')
-def show_user_details(userId):
+@app.get('/users/<int:user_id>')
+def show_user_details(user_id):
     """ Shows details about the user """
 
-    user = User.query.get(userId)
+    user = User.query.get(user_id)
     # breakpoint()
 
-    return render_template('detail-page.html', user=user)
+    return render_template('user-details.html', user=user)
 
-@app.get('/users/<int:userId>/edit')
-def show_user_edit_page(userId):
+@app.get('/users/<int:user_id>/edit')
+def show_user_edit_page(user_id):
+    # user_edit_form
     """ Shows details about the user """
 
-    user = User.query.get(userId)
+    user = User.query.get(user_id)
     # breakpoint()
 
-    return render_template('edit-page.html', user=user)
+    return render_template('user-edit-form.html', user=user)
 
-@app.post('/users/<int:userId>/edit')
-def edit_user(userId):
-    user = User.query.get(userId)
+@app.post('/users/<int:user_id>/edit')
+def edit_user(user_id):
+    """Gets the user information from the database and then 
+    updates the db with user information from the new user form"""
+    user = User.query.get(user_id)
 
     first_name = request.form['first-name']
     last_name = request.form['last-name']
@@ -77,9 +83,10 @@ def edit_user(userId):
 
     return redirect('/users')
 
-@app.post('/users/<int:userId>/delete')
-def delete_user(userId):
-    user = User.query.get(userId)
+@app.post('/users/<int:user_id>/delete')
+def delete_user(user_id):
+    """Gets user information and deletes the user from the db."""
+    user = User.query.get(user_id)
 
     db.session.delete(user)
     db.session.commit()
