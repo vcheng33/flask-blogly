@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+<h1>Create a User</h1>
+
+{% block content %}
+
+<form action='/users/{{ user_id }}/posts/new' method="POST">
+
+  <div>
+    <label>Post Title: </label>
+    <div>
+      <input name="post-title" required aria-label="Post Title" class="form-control">
+    </div>
+    <label>Post Content: </label>
+    <div>
+      <textarea name="post-content" required aria-label="Post Content" class="form-control">
+      </textarea>
+    </div>
+    <button type="submit">
+      Add
+    </button>
+    <a href='/users/{{ user_id }}'>Cancel</a>
+</form>
+
+{% endblock %}
