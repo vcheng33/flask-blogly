@@ -24,10 +24,12 @@ class User(db.Model):
     last_name = db.Column(db.String(50),
                     nullable=False)
     image_url = db.Column(db.String(1000), 
-                    # nullable=False
+                    # nullable=False,
+                    # default=some_image_url
                     )
     posts = db.relationship('Post', backref='posts')
-
+    #update backref to users (update in other places)
+    
 class Post(db.Model):
     """Post"""
 
@@ -46,3 +48,6 @@ class Post(db.Model):
 					nullable=False)
     user_id = db.Column(db.Integer, 
                     db.ForeignKey('users.id'))
+                    # nullable=False)
+    
+    # We will need to cascade when we delete a user so we don't have any orphaned children

@@ -12,7 +12,11 @@
 
 <a href='/users/{{post.posts.id}}'>Cancel</a>
 <a href='/posts/{{post.id}}/edit'>Edit</a>
-<a href='/posts/{{post.id}}/delete'>Delete</a>
+<form action='/posts/{{post.id}}/delete' method='POST'>
+    <!-- <button formaction='/posts/{{post.id}}/delete' formmethod="POST">Delete</button> -->
+    <button type="submit">Delete</button>
+</form>
+
 
 
 {% endblock %}

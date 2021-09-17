@@ -98,3 +98,6 @@ class UserTestCase (TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<li>Daffy Duck</li>", html)
             self.assertNotIn("<li>Tweety Bird</li>", html)
+    
+
+    

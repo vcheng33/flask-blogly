@@ -8,7 +8,7 @@
     <div>
         <a href='/users/{{ user.id }}/edit'>Edit</a>
         <form action='/users/{{ user.id }}/delete' method='POST'>
-            <button>Delete</button>
+            <button type="submit">Delete</button>
         </form>
     </div>
 </div>
@@ -16,7 +16,9 @@
 <h2>POSTS</h2>
 <ul>
     {% for post in posts %}
-        <a href='/posts/{{ post.id}}'><li>{{ post.title}}</li></a>
+    <a href='/posts/{{ post.id}}'>
+        <li>{{ post.title}}</li>
+    </a>
     {% endfor %}
 </ul>
 
@@ -24,4 +26,3 @@
 
 
 {% endblock %}
-

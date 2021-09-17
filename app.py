@@ -15,6 +15,9 @@ debug = DebugToolbarExtension(app)
 connect_db(app)
 db.create_all()
 
+#####################################################################################################
+## USER RELATED VIEW FUNCTIONS
+
 @app.get('/')
 def redirect_users_page():
     """Redirects to the users page"""
@@ -94,16 +97,21 @@ def delete_user(user_id):
     
     return redirect('/users')
 
+#####################################################################################################
+## POST RELATED VIEW FUNCTIONS
+
 @app.get('/users/<int:user_id>/posts/new')
 def show_posts_add_form(user_id):
     """ Shows the Posts Add Form """
+    # Opportunity to check that the user_id is real .get_or_404()
     
     return render_template('post-add-form.html', user_id=user_id)
 
 @app.post('/users/<int:user_id>/posts/new')
 def save_new_post(user_id):
     """ Takes the inputs from the new user form and add it to the database."""
-    
+    # Opportunity to check that the user_id is real .get_or_404()
+
     post_title = request.form['post-title']
     post_content = request.form['post-content']
 
@@ -117,7 +125,7 @@ def save_new_post(user_id):
 def show_post_details(post_id):
     """ Shows details about the post """
 
-    post = Post.query.get(post_id)
+    post = Post.query.get_or_404(post_id)
     # breakpoint()
 
     return render_template('post-details.html', post=post)
@@ -131,20 +139,28 @@ def show_post_edit_form(post_id):
 
     return render_template('post-edit-form.html', post=post)
 
-# @app.post('/users/<int:user_id>/edit')
-# def edit_user(user_id):
-#     """Gets the user information from the database and then 
-#     updates the db with user information from the new user form"""
-#     user = User.query.get(user_id)
+@app.post('/posts/<int:post_id>/edit')
+def edit_post(post_id):
+    """ Updates the post from the post edit form """
+    post = Post.query.get(post_id)
 
-#     first_name = request.form['first-name']
-#     last_name = request.form['last-name']
-#     image_url = request.form['image-url']
+    title = request.form['post-title']
+    content = request.form['post-content']
 
-#     user.first_name=first_name
-#     user.last_name=last_name
-#     user.image_url=image_url
+    post.title=title
+    post.content=content
     
-#     db.session.commit()
+    db.session.commit()
 
-#     return redirect('/users')
+    return redirect(f'/posts/{post_id}')
+
+@app.post('/posts/<int:post_id>/delete')
+def delete_post(post_id):
+    """Deletes post and redirects to user page"""
+    post = Post.query.get(post_id)
+    # TODO: Add Cascade to models.py
+    
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect(f'/users/{post.user_id}')
