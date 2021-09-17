@@ -122,6 +122,15 @@ def show_post_details(post_id):
 
     return render_template('post-details.html', post=post)
 
+@app.get('/posts/<int:post_id>/edit')
+def show_post_edit_form(post_id):
+    """ Shows post edit form """
+
+    post = Post.query.get(post_id)
+    # breakpoint()
+
+    return render_template('post-edit-form.html', post=post)
+
 # @app.post('/users/<int:user_id>/edit')
 # def edit_user(user_id):
 #     """Gets the user information from the database and then 
